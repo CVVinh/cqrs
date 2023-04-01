@@ -1,5 +1,5 @@
 ﻿using cqrs_vhec.Data;
-using cqrs_vhec.Module.Mongo;
+using cqrs_vhec.Module.Mongo.EntitiesMg;
 using MongoDB.Driver;
 
 namespace cqrs_vhec.Service.Mongo
@@ -29,7 +29,7 @@ namespace cqrs_vhec.Service.Mongo
 
         public async Task<ProductMg> GetById(int id)
         {
-            return _mongoCollection.Find(product => product.IdProject == id).FirstOrDefault();
+            return _mongoCollection.Find(product => product.ProductPgId == id).FirstOrDefault();
         }
 
         public async Task<ProductMg> Create(ProductMg product)
@@ -40,16 +40,15 @@ namespace cqrs_vhec.Service.Mongo
 
         public async Task<bool> Update(int id, ProductMg product)
         {
-            var updateResult = await _mongoCollection.ReplaceOneAsync(filter: p => p.IdProject == id, replacement: product);
+            var updateResult = await _mongoCollection.ReplaceOneAsync(filter: p => p.ProductPgId == id, replacement: product);
             return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
 
         public async Task<bool> Delete(int id)
         {
-            var deleteResult = await _mongoCollection.DeleteOneAsync(p => p.IdProject == id);
+            var deleteResult = await _mongoCollection.DeleteOneAsync(p => p.ProductPgId == id);
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
-
 
     }
 

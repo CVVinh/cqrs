@@ -1,4 +1,4 @@
-﻿using cqrs_vhec.Module.Mongo;
+﻿using cqrs_vhec.Module.Mongo.EntitiesMg;
 using cqrs_vhec.Service.Mongo;
 using MediatR;
 

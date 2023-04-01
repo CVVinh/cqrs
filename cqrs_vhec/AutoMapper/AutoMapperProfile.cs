@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using cqrs_vhec.Module.Mongo;
-using cqrs_vhec.Module.Postgre;
+using cqrs_vhec.Module.Postgre.Entities;
 using cqrs_vhec.Request.Command.PostgreCM;
 
 namespace cqrs_vhec.AutoMapper

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using cqrs_vhec.Module.Postgre;
+using cqrs_vhec.Module.Postgre.Entities;
 using cqrs_vhec.Service.Postgre;
 using MediatR;
 

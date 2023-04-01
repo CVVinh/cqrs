@@ -1,6 +1,6 @@
 ﻿using cqrs_vhec.Data;
 using cqrs_vhec.Module.Mongo;
-using cqrs_vhec.Module.Postgre;
+using cqrs_vhec.Module.Postgre.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Collections.Generic;

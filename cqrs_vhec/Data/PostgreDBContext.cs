@@ -1,4 +1,4 @@
-﻿using cqrs_vhec.Module.Postgre;
+﻿using cqrs_vhec.Module.Postgre.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
