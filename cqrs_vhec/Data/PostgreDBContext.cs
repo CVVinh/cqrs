@@ -12,6 +12,11 @@ namespace cqrs_vhec.Data
         }
         
         public virtual DbSet<ProductPg> ProductPgs { get; set; }
+        public virtual DbSet<TypeProductPg> TypeProductPgs { get; set; }
+        public virtual DbSet<ProductImgPg> ProductImgPgs { get; set; }
+        public virtual DbSet<InformationProductPg> InformationProductPgs { get; set; }
+        public virtual DbSet<InformationTypeProductPg> InformationTypeProductPgs { get; set; }
+        public virtual DbSet<DetailInformationTypeProductPg> DetailInformationTypeProductPgs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

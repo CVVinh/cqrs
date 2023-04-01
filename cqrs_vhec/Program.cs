@@ -16,7 +16,11 @@ builder.Services.AddSingleton<MongoDBContext>();
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<PostgreDBContext>(option =>
 option.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLDatabase")));
 
+// postgre interface init
 builder.Services.AddScoped<IProductPgService, ProductPgService>();
+builder.Services.AddScoped<ITypeProductPgService, TypeProductPgService>();
+
+// interface mongodb
 builder.Services.AddScoped<IProductMgService, ProductMgService>();
 
 
