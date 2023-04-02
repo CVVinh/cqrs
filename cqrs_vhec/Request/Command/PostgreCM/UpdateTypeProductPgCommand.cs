@@ -3,6 +3,7 @@ using cqrs_vhec.Module.Postgre.Entities;
 using cqrs_vhec.Request.Query;
 using cqrs_vhec.Service.Postgre;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace cqrs_vhec.Request.Command.PostgreCM
 {
@@ -35,14 +36,21 @@ namespace cqrs_vhec.Request.Command.PostgreCM
 
         public async Task<TypeProductPg> Handle(UpdateTypeProductPgCommand request, CancellationToken cancellationToken)
         {
-            var existingEntity = await _typeProductPgService.GetById(s => s.Id.Equals(request.Id));
-            if (existingEntity == null)
+            try
+            {
+                var existingEntity = await _typeProductPgService.GetById(s => s.Id.Equals(request.Id), s => s.Include(s => s.ProductPg).Include(s => s.InformationTypeProductPg));
+                if (existingEntity == null)
+                {
+                    return null;
+                }
+                var mapData = _mapper.Map(request, existingEntity);
+                await _typeProductPgService.Update(mapData);
+                return mapData;
+            }
+            catch (Exception ex)
             {
                 return null;
             }
-            var mapData = _mapper.Map(request, existingEntity);
-            await _typeProductPgService.Update(mapData);
-            return existingEntity;
         }
     }
 

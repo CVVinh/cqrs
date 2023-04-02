@@ -20,11 +20,10 @@ namespace cqrs_vhec.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllPg()
+        public async Task<IActionResult> GetAll()
         {
             var query = new GetAllTypeProductPgQuery();
             var result = await _mediator.Send(query);
-
             return Ok(result);
         }
 
@@ -33,12 +32,10 @@ namespace cqrs_vhec.Controllers
         {
             var query = new GetById<TypeProductPg>(id);
             var result = await _mediator.Send(query);
-
             if (result == null)
             {
                 return NotFound();
             }
-
             return Ok(result);
         }
 
@@ -46,7 +43,10 @@ namespace cqrs_vhec.Controllers
         public async Task<IActionResult> Create([FromBody] CreateTypeProductPgCommand command)
         {
             var result = await _mediator.Send(command);
-
+            if (result == null)
+            {
+                return BadRequest();
+            }
             return Ok(result);
         }
 
@@ -71,7 +71,7 @@ namespace cqrs_vhec.Controllers
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var command = new GetById<TypeProductPg>(id);
+            var command = new DeleteTypeProductPgCommand(id);
             var result = await _mediator.Send(command);
 
             if (result == null)

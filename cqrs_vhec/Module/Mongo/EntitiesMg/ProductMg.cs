@@ -24,8 +24,8 @@ namespace cqrs_vhec.Module.Mongo.EntitiesMg
         [BsonElement("TypeProductId")]
         public int TypeProductId { get; set; }
 
-        [BsonElement("ProductImgPg")]
-        public List<ProductImgPg> ProductImgPg { get; set; }
+        [BsonElement("ProductImgMg")]
+        public List<ProductImgMg> ProductImgMg { get; set; }
 
         [BsonElement("DetailInformationTypeProductMg")]
         public List<DetailInformationTypeProductMg> DetailInformationTypeProductMg { get; set; }

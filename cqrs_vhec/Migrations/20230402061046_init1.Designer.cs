@@ -11,8 +11,8 @@ using cqrs_vhec.Data;
 namespace cqrs_vhec.Migrations
 {
     [DbContext(typeof(PostgreDBContext))]
-    [Migration("20230401100122_init2")]
-    partial class init2
+    [Migration("20230402061046_init1")]
+    partial class init1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,8 @@ namespace cqrs_vhec.Migrations
 
                     b.Property<int>("Id")
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.HasKey("InformationTypeProductPgId", "ProductPgId");
 
@@ -74,6 +76,8 @@ namespace cqrs_vhec.Migrations
 
                     b.Property<int>("Id")
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.HasKey("InformationProductPgId", "TypeProductPgId");
 
@@ -162,14 +166,14 @@ namespace cqrs_vhec.Migrations
                         .WithMany("DetailInformationTypeProductPg")
                         .HasForeignKey("InformationTypeProductPgId")
                         .HasPrincipalKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_InfoTypePro_DetailInfoTypePro");
 
                     b.HasOne("cqrs_vhec.Module.Postgre.Entities.ProductPg", "ProductPg")
                         .WithMany("DetailInformationTypeProductPg")
                         .HasForeignKey("ProductPgId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_Pro_DetailPro");
 
@@ -183,14 +187,14 @@ namespace cqrs_vhec.Migrations
                     b.HasOne("cqrs_vhec.Module.Postgre.Entities.InformationProductPg", "InformationProductPg")
                         .WithMany("InformationTypeProductPg")
                         .HasForeignKey("InformationProductPgId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_InfoPro_InfoTypePro");
 
                     b.HasOne("cqrs_vhec.Module.Postgre.Entities.TypeProductPg", "TypeProductPg")
                         .WithMany("InformationTypeProductPg")
                         .HasForeignKey("TypeProductPgId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_TypePro_InfoTypePro");
 
@@ -204,7 +208,7 @@ namespace cqrs_vhec.Migrations
                     b.HasOne("cqrs_vhec.Module.Postgre.Entities.ProductPg", "ProductPg")
                         .WithMany("ProductImgPg")
                         .HasForeignKey("ProductPgId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_Pro_ProImg");
 
@@ -216,7 +220,7 @@ namespace cqrs_vhec.Migrations
                     b.HasOne("cqrs_vhec.Module.Postgre.Entities.TypeProductPg", "TypeProductPg")
                         .WithMany("ProductPg")
                         .HasForeignKey("TypeProductPgId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_TypePro_Pro");
 

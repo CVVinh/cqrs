@@ -2,6 +2,7 @@
 using cqrs_vhec.Module.Postgre.Entities;
 using cqrs_vhec.Service.Postgre;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace cqrs_vhec.Request.Query.PostgreQ
 {
@@ -22,7 +23,7 @@ namespace cqrs_vhec.Request.Query.PostgreQ
 
         public async Task<IEnumerable<TypeProductPg>> Handle(GetAllTypeProductPgQuery request, CancellationToken cancellationToken)
         {
-            return await _typeProductPgService.GetAll();
+            return await _typeProductPgService.GetAll(s => s.Include(s => s.ProductPg).Include(s => s.InformationTypeProductPg));
         }
     }
 

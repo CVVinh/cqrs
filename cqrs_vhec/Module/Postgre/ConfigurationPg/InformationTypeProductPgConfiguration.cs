@@ -10,10 +10,12 @@ namespace cqrs_vhec.Module.Postgre.Configuration
         {
             builder.ToTable("InformationTypeProduct", "public");
 
+            builder.Property(e => e.Id).UseIdentityColumn();
             builder.HasKey(e => new
             {
                 e.InformationProductPgId,
-                e.TypeProductPgId
+                e.TypeProductPgId,
+                e.Id
             });
             builder.Property(e => e.InformationProductPgId).IsRequired();
             builder.Property(e => e.TypeProductPgId).IsRequired();

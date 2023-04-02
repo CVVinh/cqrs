@@ -29,13 +29,16 @@ namespace cqrs_vhec.Migrations
                     b.Property<int>("ProductPgId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.HasKey("InformationTypeProductPgId", "ProductPgId");
+                    b.HasKey("InformationTypeProductPgId", "ProductPgId", "Id");
 
                     b.HasIndex("ProductPgId");
 
@@ -71,9 +74,12 @@ namespace cqrs_vhec.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    b.HasKey("InformationProductPgId", "TypeProductPgId");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.HasKey("InformationProductPgId", "TypeProductPgId", "Id");
 
                     b.HasIndex("TypeProductPgId");
 
