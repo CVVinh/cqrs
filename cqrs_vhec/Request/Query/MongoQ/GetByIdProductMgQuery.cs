@@ -4,10 +4,6 @@ using MediatR;
 
 namespace cqrs_vhec.Request.Query.MongoQ
 {
-    public class GetByIdProductMgQuery
-    {
-    }
-
     public class GetByIdProductMgQueryMg : IRequest<ProductMg>
     {
         public int IdProject { get; set; }

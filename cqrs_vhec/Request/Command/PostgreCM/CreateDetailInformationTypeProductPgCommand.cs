@@ -55,7 +55,7 @@ namespace cqrs_vhec.Request.Command.PostgreCM
 
                 var objectMg = new DetailInformationTypeProductMg()
                 {
-                    DetailInformationTypeProductMgId = result.Id,
+                    DetailInformationTypeProductPgId = result.Id,
                     InformationTypeProductMgId = mapDataPg.InformationTypeProductPgId,
                     ProductMgId = mapDataPg.ProductPgId,
                     Content = mapDataPg.Content,

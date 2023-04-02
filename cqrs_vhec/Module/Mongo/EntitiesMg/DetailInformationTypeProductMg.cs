@@ -4,8 +4,8 @@ namespace cqrs_vhec.Module.Mongo.EntitiesMg
 {
     public class DetailInformationTypeProductMg : BaseEntityMongo
     {
-        [BsonElement("DetailInformationTypeProductMgId")]
-        public int DetailInformationTypeProductMgId { get; set; }
+        [BsonElement("DetailInformationTypeProductPgId")]
+        public int DetailInformationTypeProductPgId { get; set; }
 
         [BsonElement("InformationTypeProductMgId")]
         public int InformationTypeProductMgId { get; set; }

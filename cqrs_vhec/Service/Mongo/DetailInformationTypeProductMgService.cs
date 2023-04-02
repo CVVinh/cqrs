@@ -30,7 +30,7 @@ namespace cqrs_vhec.Service.Mongo
 
         public async Task<bool> Delete(int id)
         {
-            var deleteResult = await _mongoCollection.DeleteOneAsync(p => p.DetailInformationTypeProductMgId == id);
+            var deleteResult = await _mongoCollection.DeleteOneAsync(p => p.DetailInformationTypeProductPgId == id);
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
 
@@ -41,12 +41,12 @@ namespace cqrs_vhec.Service.Mongo
 
         public async Task<DetailInformationTypeProductMg> GetById(int id)
         {
-            return _mongoCollection.Find(entity => entity.DetailInformationTypeProductMgId == id).FirstOrDefault();
+            return await _mongoCollection.Find(entity => entity.DetailInformationTypeProductPgId == id).FirstOrDefaultAsync();
         }
 
         public async Task<bool> Update(int id, DetailInformationTypeProductMg detail)
         {
-            var updateResult = await _mongoCollection.ReplaceOneAsync(filter: p => p.DetailInformationTypeProductMgId == id, replacement: detail);
+            var updateResult = await _mongoCollection.ReplaceOneAsync(filter: p => p.DetailInformationTypeProductPgId == id, replacement: detail);
             return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
     }

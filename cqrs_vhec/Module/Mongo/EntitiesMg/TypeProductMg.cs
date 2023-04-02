@@ -12,9 +12,6 @@ namespace cqrs_vhec.Module.Mongo.EntitiesMg
         [BsonElement("Name")]
         public string Name { get; set; }
 
-        [BsonElement("TypeUnitId")]
-        public int TypeUnitId { get; set; }
-
         [BsonElement("ProductMg")]
         public List<ProductMg> ProductMg { get; set; }
 

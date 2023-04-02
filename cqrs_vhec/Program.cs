@@ -26,8 +26,12 @@ builder.Services.AddScoped<IProductPgService, ProductPgService>();
 builder.Services.AddScoped<ITypeProductPgService, TypeProductPgService>();
 
 // interface mongodb
-builder.Services.AddScoped<IProductMgService, ProductMgService>();
 builder.Services.AddScoped<IDetailInformationTypeProductMgService, DetailInformationTypeProductMgService>();
+builder.Services.AddScoped<IInformationProductMgService, InformationProductMgService>();
+builder.Services.AddScoped<IInformationTypeProductMgService, InformationTypeProductMgService>();
+builder.Services.AddScoped<IProductMgService, ProductMgService>();
+builder.Services.AddScoped<IProductImgMgService, ProductImgMgService>();
+builder.Services.AddScoped<ITypeProductMgService, TypeProductMgService>();
 
 
 

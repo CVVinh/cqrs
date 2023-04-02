@@ -1,6 +1,7 @@
 ﻿using cqrs_vhec.Module.Postgre.Entities;
 using cqrs_vhec.Request.Command.PostgreCM;
 using cqrs_vhec.Request.Query;
+using cqrs_vhec.Request.Query.MongoQ;
 using cqrs_vhec.Request.Query.PostgreQ;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +20,28 @@ namespace cqrs_vhec.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAllMg")]
+        public async Task<IActionResult> GetAllMg()
+        {
+            var query = new GetAllTypeProductMgQuery();
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
+        }
+        [HttpGet("GetByIdMg/{id}")]
+        public async Task<IActionResult> GetByIdMg(int id)
+        {
+            var query = new GetByIdTypeProductMgQuery(id);
+            var result = await _mediator.Send(query);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllPg")]
         public async Task<IActionResult> GetAll()
         {
             var query = new GetAllTypeProductPgQuery();
@@ -27,7 +49,7 @@ namespace cqrs_vhec.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("GetByIdPg/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetById<TypeProductPg>(id);

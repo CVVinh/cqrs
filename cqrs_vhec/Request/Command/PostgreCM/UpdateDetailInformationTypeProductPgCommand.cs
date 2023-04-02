@@ -69,7 +69,7 @@ namespace cqrs_vhec.Request.Command.PostgreCM
                     var objectMg = new DetailInformationTypeProductMg()
                     {
                         Id = findMongo.Id,
-                        DetailInformationTypeProductMgId = findMongo.DetailInformationTypeProductMgId,
+                        DetailInformationTypeProductPgId = findMongo.DetailInformationTypeProductPgId,
                         InformationTypeProductMgId = mapData.InformationTypeProductPgId,
                         ProductMgId = mapData.ProductPgId,
                         Content = mapData.Content,

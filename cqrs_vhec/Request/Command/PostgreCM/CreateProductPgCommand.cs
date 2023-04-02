@@ -89,7 +89,7 @@ namespace cqrs_vhec.Request.Command.PostgreCM
                     {
                         var objDetail = new DetailInformationTypeProductMg()
                         {
-                            DetailInformationTypeProductMgId = item.Id,
+                            DetailInformationTypeProductPgId = item.Id,
                             InformationTypeProductMgId = item.InformationTypeProductPgId,
                             ProductMgId = item.ProductPgId,
                             Content = item.Content,
