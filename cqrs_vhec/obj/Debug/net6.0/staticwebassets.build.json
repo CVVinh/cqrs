@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pjJ3jkk9A8rvc3bGdyU1Cpz2+aXFyoBek4h+CXr3cHo=",
+  "Hash": "nIGL39XUQS3w81+u7GDwdQ0ykRwjIbcUeJI6WnUVd+g=",
   "Source": "cqrs_vhec",
   "BasePath": "_content/cqrs_vhec",
   "Mode": "Default",
@@ -202,6 +202,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\ProductPicture\\giaDinh02-04-2023-20-47-37-360.jpg"
+    },
+    {
+      "Identity": "D:\\Work\\cqrs\\cqrs_vhec\\wwwroot\\ProductPicture\\giaDinh02-04-2023-22-23-22-895.jpg",
+      "SourceId": "cqrs_vhec",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Work\\cqrs\\cqrs_vhec\\wwwroot\\",
+      "BasePath": "_content/cqrs_vhec",
+      "RelativePath": "ProductPicture/giaDinh02-04-2023-22-23-22-895.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ProductPicture\\giaDinh02-04-2023-22-23-22-895.jpg"
     },
     {
       "Identity": "D:\\Work\\cqrs\\cqrs_vhec\\wwwroot\\ProductPicture\\luffy02-04-2023-11-12-02-940.jpg",

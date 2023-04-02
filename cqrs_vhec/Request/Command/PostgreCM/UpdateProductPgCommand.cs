@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using cqrs_vhec.Helper;
+using cqrs_vhec.Module.Mongo.EntitiesMg;
 using cqrs_vhec.Module.Postgre.Entities;
 using cqrs_vhec.Request.DTOs;
 using cqrs_vhec.Service.Mongo;
@@ -75,8 +76,59 @@ namespace cqrs_vhec.Request.Command.PostgreCM
                 {
                     mapDataPg.ProductImgPg = new List<ProductImgPg>();
                 }
-                await _productPgService.Update(mapDataPg);
+                var result = await _productPgService.Update(mapDataPg);
 
+                // update mongo
+                var findMongo = await _productMgService.GetById(existingEntity.Id);
+                if(findMongo != null)
+                {
+                    var arrProductImgMg = new List<ProductImgMg>();
+                    foreach (var item in existingEntity.ProductImgPg)
+                    {
+                        var objImg = new ProductImgMg()
+                        {
+                            ProductImgPgId = item.Id,
+                            ImgPath = item.ImgPath,
+                            ProductMgId = item.ProductPgId,
+                        };
+                        arrProductImgMg.Add(objImg);
+                    }
+                    var arrProductDetailMg = new List<DetailInformationTypeProductMg>();
+                    foreach (var item in existingEntity.DetailInformationTypeProductPg)
+                    {
+                        var objDetail = new DetailInformationTypeProductMg()
+                        {
+                            DetailInformationTypeProductPgId = item.Id,
+                            InformationTypeProductMgId = item.InformationTypeProductPgId,
+                            ProductMgId = item.ProductPgId,
+                            Content = item.Content,
+                        };
+                        arrProductDetailMg.Add(objDetail);
+                    }
+
+                    var objectMg = new ProductMg()
+                    {
+                        Id = findMongo.Id,
+                        ProductPgId = findMongo.ProductPgId,
+                        Name = existingEntity.Name,
+                        Description = existingEntity.Description,
+                        Quantity = existingEntity.Quantity,
+                        Price = existingEntity.Price,
+                        TypeProductId = existingEntity.TypeProductPgId,
+                        ProductImgMg = arrProductImgMg,
+                        DetailInformationTypeProductMg = arrProductDetailMg,
+                    };
+
+                    var updateMongo = await _productMgService.Update(existingEntity.Id, objectMg);
+                    if (updateMongo == true)
+                    {
+                        return mapDataPg;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
                 return mapDataPg;
             }
             catch (Exception ex)

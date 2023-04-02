@@ -67,6 +67,8 @@ namespace cqrs_vhec.Request.Command.PostgreCM
                     mapDataPg.ProductImgPg = new List<ProductImgPg>();
                 }
                 var result = await _productPgService.Insert(mapDataPg);
+
+                // add mongo
                 if(request != null)
                 {
                     var addMongo = await _productPgService.GetById(s => s.Id.Equals(mapDataPg.Id), s => s.Include(s => s.ProductImgPg).Include(s => s.TypeProductPg).Include(s => s.DetailInformationTypeProductPg));

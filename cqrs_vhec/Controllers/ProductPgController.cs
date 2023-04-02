@@ -25,29 +25,29 @@ namespace cqrs_vhec.Controllers
             _host = host;
         }
 
-        //[HttpGet("GetAllMg")]
-        //public async Task<IActionResult> GetAllMg()
-        //{
-        //    var query = new GetAllProductMgQuery();
-        //    var result = await _mediator.Send(query);
+        [HttpGet("GetAllMg")]
+        public async Task<IActionResult> GetAllMg()
+        {
+            var query = new GetAllProductMgQuery();
+            var result = await _mediator.Send(query);
 
-        //    return Ok(result);
-        //}
-        //[HttpGet("GetByIdMg/{id}")]
-        //public async Task<IActionResult> GetByIdMg(int id)
-        //{
-        //    var query = new GetByIdProductMgQueryMg(id);
-        //    var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+        [HttpGet("GetByIdMg/{id}")]
+        public async Task<IActionResult> GetByIdMg(int id)
+        {
+            var query = new GetByIdProductMgQueryMg(id);
+            var result = await _mediator.Send(query);
 
-        //    if (result == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (result == null)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(result);
-        //}
+            return Ok(result);
+        }
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAllPg")]
         public async Task<IActionResult> GetAll()
         {
             var query = new GetAllProductPgQuery();
@@ -56,7 +56,7 @@ namespace cqrs_vhec.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("GetByIdPg/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetById<ProductPg>(id);
