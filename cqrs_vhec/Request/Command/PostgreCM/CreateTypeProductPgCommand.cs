@@ -4,6 +4,7 @@ using cqrs_vhec.Module.Postgre.Entities;
 using cqrs_vhec.Service.Mongo;
 using cqrs_vhec.Service.Postgre;
 using MediatR;
+using System.Xml.Linq;
 
 namespace cqrs_vhec.Request.Command.PostgreCM
 {
@@ -40,15 +41,44 @@ namespace cqrs_vhec.Request.Command.PostgreCM
             {
                 var mapDataPg = _mapper.Map<TypeProductPg>(request);
                 var result = await _typeProductPgService.Insert(mapDataPg);
-                //if(result != null)
-                //{
-                //    var objectMg = new TypeProductMg()
-                //    {
-                //        TypeProductPgId = result.Id,
-                //        Name = result.Name,
-                //    };
-                //    await _typeProductMgService.Create(objectMg);
-                //}
+
+                if(result != null)
+                {
+                    //var arrProduct = new List<ProductMg>();
+                    //foreach(var item in result.ProductPg)
+                    //{
+                    //    var objItem = new ProductMg()
+                    //    {
+                    //        ProductPgId = item.Id,
+                    //        Name = item.Name,
+                    //        Description = item.Description,
+                    //        Quantity = item.Quantity,
+                    //        Price = item.Price,
+                    //    };
+                    //    arrProduct.Add(objItem);
+                    //}
+
+                    //var arrInfoTypeProduct = new List<InformationTypeProductMg>();
+                    //foreach (var item in result.InformationTypeProductPg)
+                    //{
+                    //    var objItem = new InformationTypeProductMg()
+                    //    {
+                    //        InformationTypeProductPgId = item.Id,
+                    //        InformationProductMgId = item.InformationProductPgId,
+                    //        TypeProductMgId = item.TypeProductPgId,
+                    //    };
+                    //    arrInfoTypeProduct.Add(objItem);
+                    //}
+
+                    var objectMg = new TypeProductMg()
+                    {
+                        TypeProductPgId = result.Id,
+                        Name = result.Name,
+                        //ProductMg = arrProduct,
+                        //InformationTypeProductMg = arrInfoTypeProduct,
+                    };
+                    await _typeProductMgService.Create(objectMg);
+                }
                
                 return mapDataPg;
             }

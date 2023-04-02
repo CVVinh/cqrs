@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using cqrs_vhec.Module.Postgre.Entities;
 using cqrs_vhec.Request.Query;
+using cqrs_vhec.Service.Mongo;
 using cqrs_vhec.Service.Postgre;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +20,13 @@ namespace cqrs_vhec.Request.Command.PostgreCM
     public class DeleteTypeProductPgHandler : IRequestHandler<DeleteTypeProductPgCommand, TypeProductPg>
     {
         private readonly ITypeProductPgService _typeProductPgService;
+        private readonly ITypeProductMgService _typeProductMgService;
         private readonly IMapper _mapper;
 
-        public DeleteTypeProductPgHandler(ITypeProductPgService typeProductPgService, IMapper mapper)
+        public DeleteTypeProductPgHandler(ITypeProductPgService typeProductPgService, ITypeProductMgService typeProductMgService, IMapper mapper)
         {
             _typeProductPgService = typeProductPgService;
+            _typeProductMgService = typeProductMgService;
             _mapper = mapper;
         }
 
@@ -38,6 +41,18 @@ namespace cqrs_vhec.Request.Command.PostgreCM
                 }
 
                 await _typeProductPgService.Delete(existingEntity);
+
+                // delete mongo
+                var findMongo = await _typeProductMgService.GetById(existingEntity.Id);
+                var deleteMongo = await _typeProductMgService.Delete(existingEntity.Id);
+                if (deleteMongo == true)
+                {
+                    return existingEntity;
+                }
+                else
+                {
+                    return null;
+                }
                 return existingEntity;
             }
             catch (Exception ex)
