@@ -27,11 +27,9 @@ builder.Services.AddScoped<ITypeProductPgService, TypeProductPgService>();
 
 // interface mongodb
 builder.Services.AddScoped<IProductMgService, ProductMgService>();
+builder.Services.AddScoped<IDetailInformationTypeProductMgService, DetailInformationTypeProductMgService>();
 
 
-// Add services to the container.
-
-builder.Services.AddControllers();
 
 // Ignore cycle
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -39,6 +37,9 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.WriteIndented = true;
 });
+
+// Add services to the container.
+builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

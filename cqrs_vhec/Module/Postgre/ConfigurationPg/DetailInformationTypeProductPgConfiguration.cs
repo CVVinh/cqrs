@@ -9,13 +9,14 @@ namespace cqrs_vhec.Module.Postgre.Configuration
         public void Configure(EntityTypeBuilder<DetailInformationTypeProductPg> builder)
         {
             builder.ToTable("DetailInformationTypeProduct", "public");
-            builder.Property(e => e.Id).UseIdentityColumn();
-            builder.HasKey(e => new
-            {
-                e.InformationTypeProductPgId,
-                e.ProductPgId,
-                e.Id
-            });
+            builder.HasKey(e => e.Id);
+            //builder.Property(e => e.Id).UseIdentityColumn();
+            //builder.HasKey(e => new
+            //{
+            //    e.InformationTypeProductPgId,
+            //    e.ProductPgId,
+            //    e.Id
+            //});
             builder.Property(e => e.InformationTypeProductPgId).IsRequired();
             builder.Property(e => e.ProductPgId).IsRequired();
             builder.Property(e => e.Content).HasColumnType("text");

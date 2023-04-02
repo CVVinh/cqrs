@@ -35,6 +35,10 @@ namespace cqrs_vhec.AutoMapper
 
             // DetailInformationTypeProductPg
             CreateMap<CreateDetailInformationTypeProductPgDTO, DetailInformationTypeProductPg>().ReverseMap();
+            CreateMap<DeleteDetailInformationTypeProductPgCommand, DetailInformationTypeProductPg>().ReverseMap();
+            CreateMap<UpdateDetailInformationTypeProductPgCommand, DetailInformationTypeProductPg>().ReverseMap();
+            CreateMap<CreateDetailInformationTypeProductPgCommand, DetailInformationTypeProductPg>().ReverseMap();
+            CreateMap<GetById<DetailInformationTypeProductPg>, DetailInformationTypeProductPg>().ReverseMap();
 
         }
     }
