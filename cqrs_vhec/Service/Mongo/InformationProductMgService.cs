@@ -19,7 +19,7 @@ namespace cqrs_vhec.Service.Mongo
 
         public InformationProductMgService(MongoDBContext context)
         {
-            _mongoCollection = context.GetCollection<InformationProductMg>("InformationProduct");
+            _mongoCollection = context.GetCollection<InformationProductMg>("InfomationProduct");
         }
 
 

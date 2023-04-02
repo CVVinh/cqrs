@@ -6,6 +6,7 @@ using cqrs_vhec.Request.Query;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using cqrs_vhec.Request.Query.MongoQ;
 
 namespace cqrs_vhec.Controllers
 {
@@ -20,7 +21,29 @@ namespace cqrs_vhec.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAllMg")]
+        public async Task<IActionResult> GetAllMg()
+        {
+            var query = new GetAllInformationProductMgQuery();
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
+        }
+        [HttpGet("GetByIdMg/{id}")]
+        public async Task<IActionResult> GetByIdMg(int id)
+        {
+            var query = new GetByIdInformationProductMgQuery(id);
+            var result = await _mediator.Send(query);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllPg")]
         public async Task<IActionResult> GetAll()
         {
             var query = new GetAllInformationProductPgQuery();
@@ -28,7 +51,7 @@ namespace cqrs_vhec.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("GetByIdPg/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetById<InformationProductPg>(id);
