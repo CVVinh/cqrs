@@ -33,7 +33,15 @@ builder.Services.AddScoped<IProductMgService, ProductMgService>();
 builder.Services.AddScoped<IProductImgMgService, ProductImgMgService>();
 builder.Services.AddScoped<ITypeProductMgService, TypeProductMgService>();
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyPolicy", builder =>
+    {
+        builder.AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowAnyOrigin();
+    });
+});
 
 // Ignore cycle
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -59,7 +67,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("MyPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
