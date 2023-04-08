@@ -19,7 +19,7 @@ namespace cqrs_vhec.Service.Mongo
 
         public InformationTypeProductMgService(MongoDBContext context)
         {
-            _mongoCollection = context.GetCollection<InformationTypeProductMg>("InformationTypeProduct");
+            _mongoCollection = context.GetCollection<InformationTypeProductMg>("InfomationTypeProduct");
         }
 
         public async Task<InformationTypeProductMg> Create(InformationTypeProductMg entity)

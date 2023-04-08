@@ -11,8 +11,8 @@ using cqrs_vhec.Data;
 namespace cqrs_vhec.Migrations
 {
     [DbContext(typeof(PostgreDBContext))]
-    [Migration("20230402170921_init4")]
-    partial class init4
+    [Migration("20230403083351_init1")]
+    partial class init1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,19 +71,21 @@ namespace cqrs_vhec.Migrations
 
             modelBuilder.Entity("cqrs_vhec.Module.Postgre.Entities.InformationTypeProductPg", b =>
                 {
-                    b.Property<int>("InformationProductPgId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TypeProductPgId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.HasKey("InformationProductPgId", "TypeProductPgId", "Id");
+                    b.Property<int>("InformationProductPgId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TypeProductPgId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InformationProductPgId");
 
                     b.HasIndex("TypeProductPgId");
 
@@ -169,7 +171,6 @@ namespace cqrs_vhec.Migrations
                     b.HasOne("cqrs_vhec.Module.Postgre.Entities.InformationTypeProductPg", "InformationTypeProductPg")
                         .WithMany("DetailInformationTypeProductPg")
                         .HasForeignKey("InformationTypeProductPgId")
-                        .HasPrincipalKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_InfoTypePro_DetailInfoTypePro");

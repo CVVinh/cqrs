@@ -46,29 +46,28 @@ namespace cqrs_vhec.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    InformationProductPgId = table.Column<int>(type: "integer", nullable: false),
-                    TypeProductPgId = table.Column<int>(type: "integer", nullable: false),
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    InformationProductPgId = table.Column<int>(type: "integer", nullable: false),
+                    TypeProductPgId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InformationTypeProduct", x => new { x.InformationProductPgId, x.TypeProductPgId });
-                    table.UniqueConstraint("AK_InformationTypeProduct_Id", x => x.Id);
+                    table.PrimaryKey("PK_InformationTypeProduct", x => x.Id);
                     table.ForeignKey(
                         name: "FK_InfoPro_InfoTypePro",
                         column: x => x.InformationProductPgId,
                         principalSchema: "public",
                         principalTable: "InformationProduct",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TypePro_InfoTypePro",
                         column: x => x.TypeProductPgId,
                         principalSchema: "public",
                         principalTable: "TypeProduct",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,7 +92,7 @@ namespace cqrs_vhec.Migrations
                         principalSchema: "public",
                         principalTable: "TypeProduct",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,29 +100,29 @@ namespace cqrs_vhec.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    InformationTypeProductPgId = table.Column<int>(type: "integer", nullable: false),
-                    ProductPgId = table.Column<int>(type: "integer", nullable: false),
-                    Content = table.Column<string>(type: "text", nullable: true),
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Content = table.Column<string>(type: "text", nullable: true),
+                    InformationTypeProductPgId = table.Column<int>(type: "integer", nullable: false),
+                    ProductPgId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DetailInformationTypeProduct", x => new { x.InformationTypeProductPgId, x.ProductPgId });
+                    table.PrimaryKey("PK_DetailInformationTypeProduct", x => x.Id);
                     table.ForeignKey(
                         name: "FK_InfoTypePro_DetailInfoTypePro",
                         column: x => x.InformationTypeProductPgId,
                         principalSchema: "public",
                         principalTable: "InformationTypeProduct",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Pro_DetailPro",
                         column: x => x.ProductPgId,
                         principalSchema: "public",
                         principalTable: "Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -145,14 +144,26 @@ namespace cqrs_vhec.Migrations
                         principalSchema: "public",
                         principalTable: "Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetailInformationTypeProduct_InformationTypeProductPgId",
+                schema: "public",
+                table: "DetailInformationTypeProduct",
+                column: "InformationTypeProductPgId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetailInformationTypeProduct_ProductPgId",
                 schema: "public",
                 table: "DetailInformationTypeProduct",
                 column: "ProductPgId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InformationTypeProduct_InformationProductPgId",
+                schema: "public",
+                table: "InformationTypeProduct",
+                column: "InformationProductPgId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InformationTypeProduct_TypeProductPgId",
