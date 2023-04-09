@@ -52,15 +52,20 @@ namespace cqrs_vhec.Request.Command.PostgreCM
             {
                 var mapDataPg = _mapper.Map<DetailInformationTypeProductPg>(request);
                 var result = await _detailInformationTypeProductPgService.Insert(mapDataPg);
+                await _detailInformationTypeProductPgService.SubmitSaveAsync();
 
-                var objectMg = new DetailInformationTypeProductMg()
+                if (result != null)
                 {
-                    DetailInformationTypeProductPgId = result.Id,
-                    InformationTypeProductMgId = mapDataPg.InformationTypeProductPgId,
-                    ProductMgId = mapDataPg.ProductPgId,
-                    Content = mapDataPg.Content,
-                };
-                await _detailInformationTypeProductMgService.Create(objectMg);
+                    var objectMg = new DetailInformationTypeProductMg()
+                    {
+                        DetailInformationTypeProductPgId = result.Id,
+                        InformationTypeProductMgId = mapDataPg.InformationTypeProductPgId,
+                        ProductMgId = mapDataPg.ProductPgId,
+                        Content = mapDataPg.Content,
+                    };
+                    await _detailInformationTypeProductMgService.Create(objectMg);
+                }
+                
                 return mapDataPg;
             }
             catch (Exception ex)

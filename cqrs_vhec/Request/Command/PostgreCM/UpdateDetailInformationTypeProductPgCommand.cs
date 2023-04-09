@@ -61,6 +61,7 @@ namespace cqrs_vhec.Request.Command.PostgreCM
                 }
                 var mapData = _mapper.Map(request, existingEntity);
                 await _detailInformationTypeProductPgService.Update(mapData);
+                await _detailInformationTypeProductPgService.SubmitSaveAsync();
 
                 // update mongo
                 var findMongo = await _detailInformationTypeProductMgService.GetById(existingEntity.Id);

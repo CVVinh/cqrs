@@ -14,11 +14,14 @@ namespace cqrs_vhec.Service
         Task<TEntity?> Update(TEntity entity);
         Task<TEntity?> Delete(TEntity entity);
         bool IsEntity(Expression<Func<TEntity, bool>> expression);
+        Task<IEnumerable<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null);
+        Task SubmitSaveAsync();
     }
 
     public class PostgreRepo<TEntity> : IPostgreRepo<TEntity> where TEntity : class
     {
-        private PostgreDBContext _context;
+        private readonly PostgreDBContext _context;
         private DbSet<TEntity> dbSet;
 
         public PostgreRepo(PostgreDBContext context)
@@ -53,7 +56,6 @@ namespace cqrs_vhec.Service
         public async Task<TEntity?> Insert(TEntity entity)
         {
             await dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
             return entity;
         }
 
@@ -61,20 +63,33 @@ namespace cqrs_vhec.Service
         public async Task<TEntity?> Update(TEntity entity)
         {
             dbSet.Update(entity);
-            await _context.SaveChangesAsync();
             return entity;
         }
 
         public async Task<TEntity?> Delete(TEntity entity)
         {
             dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
             return entity;
         }
 
         public bool IsEntity(Expression<Func<TEntity, bool>> expression)
         {
             return dbSet.Any(expression);
+        }
+
+        public async Task<IEnumerable<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await dbSet.Where(predicate).ToListAsync();
+        }
+
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null)
+        {
+            return predicate == null ? await dbSet.CountAsync() : await dbSet.CountAsync(predicate);
+        }
+
+        public async Task SubmitSaveAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 

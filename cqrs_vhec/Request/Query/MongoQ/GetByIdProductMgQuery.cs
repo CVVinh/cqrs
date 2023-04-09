@@ -1,10 +1,11 @@
 ﻿using cqrs_vhec.Module.Mongo.EntitiesMg;
+using cqrs_vhec.Request.DTOs;
 using cqrs_vhec.Service.Mongo;
 using MediatR;
 
 namespace cqrs_vhec.Request.Query.MongoQ
 {
-    public class GetByIdProductMgQueryMg : IRequest<ProductMg>
+    public class GetByIdProductMgQueryMg : IRequest<BaseResponse<ProductMg>>
     {
         public int IdProject { get; set; }
         public GetByIdProductMgQueryMg(int id)
@@ -13,7 +14,7 @@ namespace cqrs_vhec.Request.Query.MongoQ
         }
     }
 
-    public class GetByIdProductMgHandlerMg : IRequestHandler<GetByIdProductMgQueryMg, ProductMg>
+    public class GetByIdProductMgHandlerMg : IRequestHandler<GetByIdProductMgQueryMg, BaseResponse<ProductMg>>
     {
         private readonly IProductMgService _productMgService;
         public GetByIdProductMgHandlerMg(IProductMgService productMgService)
@@ -22,9 +23,9 @@ namespace cqrs_vhec.Request.Query.MongoQ
         }
 
        
-        public async Task<ProductMg> Handle(GetByIdProductMgQueryMg request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<ProductMg>> Handle(GetByIdProductMgQueryMg request, CancellationToken cancellationToken)
         {
-            return await _productMgService.GetById(request.IdProject);
+            return new BaseResponse<ProductMg>(true, "Get all data successfully!", await _productMgService.GetById(request.IdProject));
         }
     }
 

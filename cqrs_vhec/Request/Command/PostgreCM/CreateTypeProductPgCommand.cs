@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using cqrs_vhec.Module.Mongo.EntitiesMg;
 using cqrs_vhec.Module.Postgre.Entities;
+using cqrs_vhec.Request.DTOs;
 using cqrs_vhec.Service.Mongo;
 using cqrs_vhec.Service.Postgre;
 using MediatR;
@@ -8,7 +9,7 @@ using System.Xml.Linq;
 
 namespace cqrs_vhec.Request.Command.PostgreCM
 {
-    public class CreateTypeProductPgCommand : IRequest<TypeProductPg>
+    public class CreateTypeProductPgCommand : IRequest<BaseResponse<TypeProductPg>>
     {
         public string Name { get; set; }
        
@@ -22,7 +23,7 @@ namespace cqrs_vhec.Request.Command.PostgreCM
         }
     }
 
-    public class CreateTypeProductPgHandler : IRequestHandler<CreateTypeProductPgCommand, TypeProductPg>
+    public class CreateTypeProductPgHandler : IRequestHandler<CreateTypeProductPgCommand, BaseResponse<TypeProductPg>>
     {
         private readonly ITypeProductPgService _typeProductPgService;
         private readonly ITypeProductMgService _typeProductMgService;
@@ -35,14 +36,16 @@ namespace cqrs_vhec.Request.Command.PostgreCM
             _mapper = mapper;
         }
 
-        public async Task<TypeProductPg> Handle(CreateTypeProductPgCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<TypeProductPg>> Handle(CreateTypeProductPgCommand request, CancellationToken cancellationToken)
         {
+            var data = new TypeProductPg();
             try
             {
                 var mapDataPg = _mapper.Map<TypeProductPg>(request);
                 var result = await _typeProductPgService.Insert(mapDataPg);
+                await _typeProductPgService.SubmitSaveAsync();
 
-                if(result != null)
+                if (result != null)
                 {
                     //var arrProduct = new List<ProductMg>();
                     //foreach(var item in result.ProductPg)
@@ -80,11 +83,11 @@ namespace cqrs_vhec.Request.Command.PostgreCM
                     await _typeProductMgService.Create(objectMg);
                 }
                
-                return mapDataPg;
+                return new BaseResponse<TypeProductPg>(true, "Object created successfully!", mapDataPg);
             }
             catch (Exception ex)
             {
-                return null;
+                return new BaseResponse<TypeProductPg>(false, "Object created failt!", data);
             }
         }
     }

@@ -1,10 +1,11 @@
 ﻿using cqrs_vhec.Module.Mongo.EntitiesMg;
+using cqrs_vhec.Request.DTOs;
 using cqrs_vhec.Service.Mongo;
 using MediatR;
 
 namespace cqrs_vhec.Request.Query.MongoQ
 {
-    public class GetByIdTypeProductMgQuery : IRequest<TypeProductMg>
+    public class GetByIdTypeProductMgQuery : IRequest<BaseResponse<TypeProductMg>>
     {
         public int TypeProductPgId { get; set; }
         public GetByIdTypeProductMgQuery(int id)
@@ -13,7 +14,7 @@ namespace cqrs_vhec.Request.Query.MongoQ
         }
     }
 
-    public class GetByIdTypeProductMgHandler : IRequestHandler<GetByIdTypeProductMgQuery, TypeProductMg>
+    public class GetByIdTypeProductMgHandler : IRequestHandler<GetByIdTypeProductMgQuery, BaseResponse<TypeProductMg>>
     {
         private readonly ITypeProductMgService _typeProductMgService;
         public GetByIdTypeProductMgHandler(ITypeProductMgService typeProductMgService)
@@ -21,9 +22,9 @@ namespace cqrs_vhec.Request.Query.MongoQ
             _typeProductMgService = typeProductMgService;
         }
 
-        public async Task<TypeProductMg> Handle(GetByIdTypeProductMgQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<TypeProductMg>> Handle(GetByIdTypeProductMgQuery request, CancellationToken cancellationToken)
         {
-            return await _typeProductMgService.GetById(request.TypeProductPgId);
+            return new BaseResponse<TypeProductMg>(true, "Get all data successfully!", await _typeProductMgService.GetById(request.TypeProductPgId));
         }
     }
 

@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace cqrs_vhec.Service.Mongo
 {
-    public interface ITypeProductMgService
+    public interface ITypeProductMgService : IMongoRepo<TypeProductMg>
     {
         Task<List<TypeProductMg>> GetAll();
         Task<TypeProductMg> GetById(int id);
@@ -13,15 +13,14 @@ namespace cqrs_vhec.Service.Mongo
         Task<bool> Delete(int id);
     }
 
-    public class TypeProductMgService : ITypeProductMgService
+    public class TypeProductMgService : MongoRepo<TypeProductMg>, ITypeProductMgService
     {
         private readonly IMongoCollection<TypeProductMg> _mongoCollection;
 
-        public TypeProductMgService(MongoDBContext context)
+        public TypeProductMgService(MongoDBContext context) : base(context)
         {
             _mongoCollection = context.GetCollection<TypeProductMg>("TypeProduct");
         }
-
 
         public async Task<TypeProductMg> Create(TypeProductMg entity)
         {

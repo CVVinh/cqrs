@@ -41,6 +41,7 @@ namespace cqrs_vhec.Request.Command.PostgreCM
                 }
 
                 await _typeProductPgService.Delete(existingEntity);
+                await _typeProductPgService.SubmitSaveAsync();
 
                 // delete mongo
                 var findMongo = await _typeProductMgService.GetById(existingEntity.Id);

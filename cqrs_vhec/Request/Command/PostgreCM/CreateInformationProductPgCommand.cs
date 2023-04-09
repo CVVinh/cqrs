@@ -51,6 +51,8 @@ namespace cqrs_vhec.Request.Command.PostgreCM
             {
                 var mapDataPg = _mapper.Map<InformationProductPg>(request);
                 var result = await _informationProductPgService.Insert(mapDataPg);
+                await _informationProductPgService.SubmitSaveAsync();
+
                 if (result != null)
                 {
                     var arrInfoTypeProduct = new List<InformationTypeProductMg>();

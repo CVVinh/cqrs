@@ -188,3 +188,4 @@ D:\Work\cqrs\cqrs_vhec\obj\Debug\net6.0\cqrs_vhec.pdb
 D:\Work\cqrs\cqrs_vhec\obj\Debug\net6.0\cqrs_vhec.genruntimeconfig.cache
 D:\Work\cqrs\cqrs_vhec\obj\Debug\net6.0\ref\cqrs_vhec.dll
 D:\Work\cqrs\cqrs_vhec\bin\Debug\net6.0\cqrs_vhec.staticwebassets.runtime.json
+D:\ongit\cqrs\cqrs_vhec\bin\Debug\net6.0\cqrs_vhec.staticwebassets.runtime.json

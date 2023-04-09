@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using cqrs_vhec.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<PostgreDBContext>(optio
 option.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLDatabase")));
 
 // postgre interface init
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDetailInformationTypeProductPgService, DetailInformationTypeProductPgService>();
 builder.Services.AddScoped<IInformationProductPgService, InformationProductPgService>();
 builder.Services.AddScoped<IInformationTypeProductPgService, InformationTypeProductPgService>();
@@ -26,12 +28,16 @@ builder.Services.AddScoped<IProductPgService, ProductPgService>();
 builder.Services.AddScoped<ITypeProductPgService, TypeProductPgService>();
 
 // interface mongodb
+builder.Services.AddScoped(typeof(IMongoRepo<>), typeof(MongoRepo<>));
 builder.Services.AddScoped<IDetailInformationTypeProductMgService, DetailInformationTypeProductMgService>();
 builder.Services.AddScoped<IInformationProductMgService, InformationProductMgService>();
 builder.Services.AddScoped<IInformationTypeProductMgService, InformationTypeProductMgService>();
 builder.Services.AddScoped<IProductMgService, ProductMgService>();
 builder.Services.AddScoped<IProductImgMgService, ProductImgMgService>();
 builder.Services.AddScoped<ITypeProductMgService, TypeProductMgService>();
+
+// implement synchronization
+builder.Services.AddScoped(typeof(IDataSynchronizationService<,>), typeof(DataSynchronizationService<,>));
 
 builder.Services.AddCors(options =>
 {

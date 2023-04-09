@@ -77,6 +77,7 @@ namespace cqrs_vhec.Request.Command.PostgreCM
                     mapDataPg.ProductImgPg = new List<ProductImgPg>();
                 }
                 var result = await _productPgService.Update(mapDataPg);
+                await _productPgService.SubmitSaveAsync();
 
                 // update mongo
                 var findMongo = await _productMgService.GetById(existingEntity.Id);

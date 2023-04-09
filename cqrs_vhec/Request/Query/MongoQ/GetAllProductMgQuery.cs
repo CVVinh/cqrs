@@ -1,14 +1,15 @@
 ﻿using cqrs_vhec.Module.Mongo.EntitiesMg;
+using cqrs_vhec.Request.DTOs;
 using cqrs_vhec.Service.Mongo;
 using MediatR;
 
 namespace cqrs_vhec.Request.Query.MongoQ
 {
-    public class GetAllProductMgQuery : IRequest<List<ProductMg>>
+    public class GetAllProductMgQuery : IRequest<BaseResponse<List<ProductMg>>>
     {
     }
 
-    public class GetAllTypeUnitHandlerMg : IRequestHandler<GetAllProductMgQuery, List<ProductMg>>
+    public class GetAllTypeUnitHandlerMg : IRequestHandler<GetAllProductMgQuery, BaseResponse<List<ProductMg>>>
     {
         private readonly IProductMgService _productMgService;
         public GetAllTypeUnitHandlerMg(IProductMgService productMgService)
@@ -16,9 +17,9 @@ namespace cqrs_vhec.Request.Query.MongoQ
             _productMgService = productMgService;
         }
 
-        public async Task<List<ProductMg>> Handle(GetAllProductMgQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<List<ProductMg>>> Handle(GetAllProductMgQuery request, CancellationToken cancellationToken)
         {
-            return await _productMgService.GetAll();
+            return new BaseResponse<List<ProductMg>>(true, "Get all data successfully!", await _productMgService.GetAll());
         }
     }
 

@@ -1,10 +1,11 @@
 ﻿using cqrs_vhec.Module.Mongo.EntitiesMg;
+using cqrs_vhec.Request.DTOs;
 using cqrs_vhec.Service.Mongo;
 using MediatR;
 
 namespace cqrs_vhec.Request.Query.MongoQ
 {
-    public class GetByIdDetailInformationTypeProductMgQuery : IRequest<DetailInformationTypeProductMg>
+    public class GetByIdDetailInformationTypeProductMgQuery : IRequest<BaseResponse<DetailInformationTypeProductMg>>
     {
         public int DetailInformationTypeProductMgId { get; set; }
         public GetByIdDetailInformationTypeProductMgQuery(int id)
@@ -13,7 +14,7 @@ namespace cqrs_vhec.Request.Query.MongoQ
         }
     }
 
-    public class GetByIdDetailInformationTypeProductMgHandler : IRequestHandler<GetByIdDetailInformationTypeProductMgQuery, DetailInformationTypeProductMg>
+    public class GetByIdDetailInformationTypeProductMgHandler : IRequestHandler<GetByIdDetailInformationTypeProductMgQuery, BaseResponse<DetailInformationTypeProductMg>>
     {
         private readonly IDetailInformationTypeProductMgService _detailInformationTypeProductMgService;
         public GetByIdDetailInformationTypeProductMgHandler(IDetailInformationTypeProductMgService detailInformationTypeProductMgService)
@@ -21,9 +22,9 @@ namespace cqrs_vhec.Request.Query.MongoQ
             _detailInformationTypeProductMgService = detailInformationTypeProductMgService;
         }
 
-        public async Task<DetailInformationTypeProductMg> Handle(GetByIdDetailInformationTypeProductMgQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<DetailInformationTypeProductMg>> Handle(GetByIdDetailInformationTypeProductMgQuery request, CancellationToken cancellationToken)
         {
-            return await _detailInformationTypeProductMgService.GetById(request.DetailInformationTypeProductMgId);
+            return new BaseResponse<DetailInformationTypeProductMg>(true, "Get all data successfully!", await _detailInformationTypeProductMgService.GetById(request.DetailInformationTypeProductMgId));
         }
     }
 
